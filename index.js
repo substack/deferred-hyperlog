@@ -33,7 +33,7 @@ Log.prototype.append = function (value, opts, cb) {
   if (this._log) this._log.append(value, opts, cb)
   else this.once('_log', function (log) { log.append(value, opts, cb) })
 }
-Log.prototype.batch = function (docs, ops, cb) {
+Log.prototype.batch = function (docs, opts, cb) {
   if (this._log) this._log.batch(docs, opts, cb)
   else this.once('_log', function (log) { log.batch(docs, opts, cb) })
 }

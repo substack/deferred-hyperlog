@@ -8,9 +8,8 @@ test('deferred writes', function (t) {
   var docs = []
   log.createReadStream({ live: true })
     .on('data', push)
-    .on('end', compare)
 
-  log.add('hey')
+  log.add([],'hey')
   log.append('what')
   log.batch([
     { links: [], value: 'ever' },
@@ -19,8 +18,13 @@ test('deferred writes', function (t) {
   setTimeout(function () {
     log.setLog(hyperlog(memdb()))
   }, 1)
-  function push (doc) { docs.push(doc.value) }
+  function push (doc) {
+    docs.push(doc.value)
+    if (docs.length === 4) compare()
+  }
   function compare () {
-    t.deepEqual(docs, [ 'hey', 'what', 'ever', 'ugh' ])
+    t.deepEqual(docs.map(tostr).sort(),
+      [ 'ever', 'hey', 'ugh', 'what' ])
   }
 })
+function tostr (b) { return b.toString() }
