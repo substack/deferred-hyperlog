@@ -43,7 +43,7 @@ Log.prototype.get = function (link, opts, cb) {
 }
 Log.prototype.heads = function (opts, cb) {
   if (this._log) return this._log.heads(opts, cb)
-  var d = duplexify()
+  var d = duplexify.obj()
   this.once('_log', function (log) {
     d.setReadable(log.heads(opts, cb))
   })
@@ -51,25 +51,25 @@ Log.prototype.heads = function (opts, cb) {
 }
 Log.prototype.createReadStream = function (opts) {
   if (this._log) return this._log.createReadStream(opts, cb)
-  var d = duplexify()
+  var d = duplexify.obj()
   this.once('_log', function (log) {
-    d.setReadable(log.createReadStream(opts, cb))
+    d.setReadable(log.createReadStream(opts))
   })
   return d
 }
 Log.prototype.createReplicationStream = function (opts) {
-  if (this._log) return this._log.createReplicationStream(opts, cb)
-  var d = duplexify()
+  if (this._log) return this._log.createReplicationStream(opts)
+  var d = duplexify.obj()
   this.once('_log', function (log) {
-    d.setReadable(log.createReplicationStream(opts, cb))
+    d.setReadable(log.createReplicationStream(opts))
   })
   return d
 }
 Log.prototype.replicate = function (opts) {
-  if (this._log) return this._log.replicate(opts, cb)
-  var d = duplexify()
+  if (this._log) return this._log.replicate(opts)
+  var d = duplexify.obj()
   this.once('_log', function (log) {
-    d.setReadable(log.replicate(opts, cb))
+    d.setReadable(log.replicate(opts))
   })
   return d
 }
