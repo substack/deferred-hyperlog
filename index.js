@@ -73,3 +73,7 @@ Log.prototype.replicate = function (opts) {
   })
   return d
 }
+Log.prototype.ready = function (cb) {
+  if (this._log) this._log.ready(cb)
+  this.once('_log', function (log) { log.ready(cb) })
+}
