@@ -49,7 +49,7 @@ Log.prototype.heads = function (opts, cb) {
   })
   return d
 }
-Log.prototype.createReadStream = function (opts) {
+Log.prototype.createReadStream = function (opts, cb) {
   if (this._log) return this._log.createReadStream(opts, cb)
   var d = duplexify.obj()
   this.once('_log', function (log) {
